@@ -1,0 +1,78 @@
+# This Contains examples of different methods to deal with URI and possible redirections
+# All the dummy FQDNs (testappx.lan) must be configured int he /etc/hosts file of the Publisher (and the Publisher container must be restarted to take the changes)
+
+# METHOD 1
+# This application runs on the URI /testapp2/
+# Setting a rewrite for the root to /testapp2/ ensures that all the requests for the root  are rewritten to the /testapp2 URI
+# The NPA Broser Access AP would connect to the root but everything is redorected to the application URI
+# This method doesnt require to specify the NPA Brewser Access URL
+
+# This is the dummy FQDN created in the hosts file
+testapp2.lan {
+    tls internal
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+
+    # This rewrites all connections to the root domain with the desired application URI
+    rewrite / /testapp2{path}
+
+    # This provides the upstream connection to the real URL of the application. The FQDN and the Port must be the ones of the real application server
+    reverse_proxy  https://ip-172-31-30-45.eu-west-2.compute.internal:443 {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+# METHOD 2
+# This application runs on the URI /testapp3/
+# Setting a redirection from the root to the NPA Browser Access URL with the URI /testapp3/ ensures that the Client will be able ot connect to the correct URI
+# The Client follows the redirection correctly
+
+# This is the dummy FQDN created in the hosts file
+testapp3.lan {
+    tls internal
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+    
+    # This performs an immediate redirection when accessing the root URI to the correct URI
+    # As this is a redirection and the Client must be able to follow it, we must specify the full path using the NPA Browser Application URL followed by the correct URI
+    handle / {
+        redir https://ns-77d22db5-443-stefano.eu.npaproxy.goskope.com/testapp3/ 301
+    }
+
+    # This provides the upstream connection to the real URL of the application. The FQDN and the Port must be the ones of the real application server
+    reverse_proxy https://ip-172-31-30-45.eu-west-2.compute.internal:443 {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+# METHOD 3
+# This application runs on the URI /application/ and on the root it has a redirect to itself to the URI /application/
+# The application honours the HTTP Request Host, and it issues the redirect to the Requested_Host/application/
+# Setting the Host header equal to the NPA Browser Access URL ensures that any redirection to itself would use the NPA Browser access URL
+# So the Client can follow the redirection correctly
+
+# This is the dummy FQDN created in the hosts file
+testapp1.lan {
+    tls internal
+    log {
+        output file /var/log/caddy/caddy.log
+    }
+
+    # This provides the upstream connection to the real URL of the application. The FQDN and the Port must be the ones of the real application server
+    reverse_proxy https://ip-172-31-30-45.eu-west-2.compute.internal:443 {
+        transport http {
+            tls
+            tls_insecure_skip_verify
+        }
+        # This ensures that the HTTP Requested Host matches with the NPA Browser Access URL. Every redirect that the Application will issue should respect the Requested Host
+        header_up Host ns-a0007e13-443-stefano.eu.npaproxy.goskope.com
+    }
+}
