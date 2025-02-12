@@ -59,3 +59,6 @@ If you don't know at all how the application works start creating a Browser App 
 
 # Example
 In this example I'm showing how I can publish a local Splunk using NPA Browser Access and Caddy, where Splunk UI heavily relies on 30x redirections:
+
+https://github.com/user-attachments/assets/8e093cc6-0e8e-46a2-9288-adbc3595370a
+
