@@ -25,7 +25,7 @@ In order to create a NPA Browser Application and serve it via Caddy:
    - Exit the NPA Publisher Wizard (generally key 7)
    - Edit the /etc/hosts file (using ```sudo vi```) to add the dummy hostname (for example ```application1.lan```) to the ```127.0.0.1``` row
      ``` 127.0.0.1 testapp1.lan testapp2.lan testapp3.lan application1.lan ```
-   - Edit the ./Caddyfile (using ```sudo vi```) adding the section for the dummy hostname ```application1.lan``` copying one of the examles method already present in the file, for instance
+   - Edit the ./Caddyfile (using ```sudo vi```) adding the section for the dummy hostname ```application1.lan``` copying one of the examles method already present in the file, for instance (replace the ```<>``` sections with the right data)
      ```
      application1.lan {
         tls internal
