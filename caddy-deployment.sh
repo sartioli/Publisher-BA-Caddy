@@ -15,7 +15,7 @@ fi
 
 if [ ! -f "Caddyfile" ]; then
   echo "Caddyfile not found. Downloading..."
-  curl -o Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
+  curl -L -o Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
 else
   echo "Caddyfile already exists."
 fi
