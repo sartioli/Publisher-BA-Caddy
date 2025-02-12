@@ -1,6 +1,11 @@
 # Publisher-BA-Caddy
 This repo contains instruction on how to deploy Caddy on a Publisher to manage Browser Applications that require URIand Redirections
 
+# Disclaimer
+This workaround must be considered "as is" and it's not directly supported by Netskope Technical Support.
+The workaround revolves on the use of Caddy as a reverse proxy to perform some basic URL rewriting, Headers insertions and redirections.
+The basic configurations provided should be enough to publish many Web Applications that otherwise can't be publisheed via Browser Access, but some Applications that may require much deeper Rewriting may still not work.
+
 # Prerequisites
 - A Netskope Publisher deployed
 - The Netskope Publisher has access to the applications in terms of DNS resolutions and/or IP/Port access
@@ -44,3 +49,13 @@ In order to create a NPA Browser Application and serve it via Caddy:
    - Restart the Publisher (for the hosts file to be replicated on the Publisher Container and for Caddy to take the cnanges)
 3) Verify that on the NPA Applications UI after a while the ```Reachibility via Publisher``` for the Application shows a green mark for all the Publishers
 4) Test the Application access whether using the Public Host URL or via the Netskope NPA Portal
+
+# How to know what Caddy method to use
+If you don't know at all how the application works start creating a Browser App that points directly to the Application, and then inspect the HAR. for instance:
+- If the direct Application is completely unreachible it can be that the Application must be accessed via a specific URI, and on the root path there is no redirection to that URI. In this case you must check with the application administrators what is the correct URI we should point to, and then configure the Application in Caddy to use method 1 or 2 (1 is simpler, but 2 is more robust)
+- If the direct Application responds with a Redirect (30x) to itself in a different URI consider using the method 3
+- It is possible that we must use method 2 + 3 (both redirection AND Host header) in some Applications
+- Once chosen a method configure it and test it, analysing the HAR to identify further possible issues
+
+# Example
+In this example I'm showing how I can publish a local Splunk using NPA Browser Access and Caddy, where Splunk UI heavily relies on 30x redirections:
