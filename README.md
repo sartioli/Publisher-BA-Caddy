@@ -7,7 +7,9 @@ This repo contains instruction on how to deploy Caddy on a Publisher to manage B
 
 # Installation
 In order to deploy the Caddy container:
+
 1- Exit the Publisher Wizard (generally key 7)
+
 2- Run the following commands:
 ```
 curl -L https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/caddy-deployment.sh -o caddy-deployment.sh
