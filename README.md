@@ -42,5 +42,5 @@ In order to create a NPA Browser Application and serve it via Caddy:
      }
      ```
    - Restart the Publisher (for the hosts file to be replicated on the Publisher Container and for Caddy to take the cnanges)
-   - Verify that on the NPA Applications UI after a while the ```Reachibility via Publisher``` for the Application shows a green mark for all the Publishers
-   - Test the Application access whether using the Public Host URL or via the Netskope NPA Portal
+3) Verify that on the NPA Applications UI after a while the ```Reachibility via Publisher``` for the Application shows a green mark for all the Publishers
+4) Test the Application access whether using the Public Host URL or via the Netskope NPA Portal
