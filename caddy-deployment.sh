@@ -20,18 +20,13 @@ else
   echo "Caddyfile already exists."
 fi
 
-#!/bin/bash
-
-# Check if a container named "caddy" exists
-if docker inspect caddy > /dev/null 2>&1; then
-  echo "Container 'caddy' already exists."
+# Check if the "caddy" container exists
+if ! docker ps -a --format "{{.Names}}" | grep -q "^caddy$"; then
+    echo "Caddy container not found. Creating it..."
+    docker run --net=host -d --restart unless-stopped --name caddy -v "$(pwd)/Caddyfile:/etc/caddy/Caddyfile" caddy:latest
 else
-  echo "Container 'caddy' does not exist. Creating it now..."
-  docker run --net=host -d --restart unless-stopped --name caddy \
-    -v "$(pwd)/Caddyfile:/etc/caddy/Caddyfile" \
-    caddy:latest
+    echo "Caddy container already exists."
 fi
-
 
 # Warn the user
 echo "WARNING: The system must be rebooted! This action will reboot your computer."
