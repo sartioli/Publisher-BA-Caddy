@@ -7,13 +7,17 @@ This repo contains instruction on how to deploy Caddy on a Publisher to manage B
 
 # Installation
 In order to deploy the Caddy container:
-
-1- Exit the Publisher Wizard (generally key 7)
-
-2- Run the following commands:
+1) Exit the Publisher Wizard (generally key 7)
+2) Run the following commands:
 ```
 curl -L https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/caddy-deployment.sh -o caddy-deployment.sh
 sudo chmod 777 caddy-deployment.sh
 sudo ./caddy-deployment.sh
 ```
-3- Reboot the Publisher when asked
+3) Reboot the Publisher when asked
+
+# Flow to create the Browser NPA Application and serve it via Caddy
+
+In order to create a NPA Browser Application and serve it via Caddy:
+
+1)
