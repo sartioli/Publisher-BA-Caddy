@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the hosts file entry
-HOSTS_ENTRY="127.0.0.1 example.com"
+HOSTS_ENTRY="127.0.0.1 testapp1.lan testapp2.lan testapp3.lan"
 
 # Check if the entry already exists to avoid duplicates
 if grep -qF "$HOSTS_ENTRY" /etc/hosts; then
@@ -15,7 +15,7 @@ fi
 
 if [ ! -f "Caddyfile" ]; then
   echo "Caddyfile not found. Downloading..."
-  curl -o Caddyfile "https://example.com/path/to/Caddyfile"
+  curl -o Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
 else
   echo "Caddyfile already exists."
 fi
