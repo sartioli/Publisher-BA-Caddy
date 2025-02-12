@@ -1,5 +1,5 @@
 # Publisher-BA-Caddy
-This repo contains instruction on how to deploy Caddy on a Publisher to manage Browser Applications that require URIand Redirections
+This repo contains instruction on how to deploy Caddy on a Publisher to manage Browser Applications that require custom URI and Redirections
 
 # Disclaimer
 This workaround must be considered "as is" and it's not directly supported by Netskope Technical Support.
