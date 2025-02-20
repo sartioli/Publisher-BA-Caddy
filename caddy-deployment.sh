@@ -33,7 +33,7 @@ HOME_DIR=$(eval echo ~$SUDO_USER)
 cd "$HOME_DIR"
 
 # Removing the CaddyFile if present
-rm -f ./CaddyFile
+rm -f ./Caddyfile
 curl -L -o ./Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
 
 # Removing the Caddy container if present
