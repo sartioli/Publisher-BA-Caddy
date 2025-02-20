@@ -3,8 +3,11 @@ This repo contains instruction on how to deploy Caddy on a Publisher to manage B
 
 # Disclaimer
 This workaround must be considered "as is" and it's not directly supported by Netskope Technical Support.
-The workaround revolves on the use of Caddy as a reverse proxy to perform some basic URL rewriting, Headers insertions and redirections.
+The workaround revolves on the use of Caddy as a reverse proxy to perform some basic Headers rewriting, Headers insertions and Redirections to specific URIs.
 The basic configurations provided should be enough to publish many Web Applications that otherwise can't be publisheed via Browser Access, but some Applications that may require much deeper Rewriting may still not work.
+
+# WARNING
+Caddy can perform many reverse_proxy operations, but it's unable to rewrite the content of HTML transactions. It can only perform rewriting on Headers. Applications that require complex rewriting inside the HTLM code can't be published using this workaround too.
 
 # Prerequisites
 - A Netskope Publisher deployed
@@ -52,9 +55,11 @@ In order to create a NPA Browser Application and serve it via Caddy:
 
 # How to know what Caddy method to use
 If you don't know at all how the application works start creating a Browser App that points directly to the Application, and then inspect the HAR. for instance:
-- If the direct Application is completely unreachible it can be that the Application must be accessed via a specific URI, and on the root path there is no redirection to that URI. In this case you must check with the application administrators what is the correct URI we should point to, and then configure the Application in Caddy to use method 1 or 2 (1 is simpler, but 2 is more robust)
-- If the direct Application responds with a Redirect (30x) to itself in a different URI consider using the method 3
-- It is possible that we must use method 2 + 3 (both redirection AND Host header) in some Applications
+- If the direct Application is completely unreachible on the root it can be that the Application must be accessed via a specific URI, and on the root path there is no redirection to that URI. In this case you must check with the application administrators what is the correct URI we should point to, and then configure the Application in Caddy to use method 1
+- If the direct Application responds with a Redirect (30x) to itself in a different URI consider using the method 2
+- It is possible that we must use method 1 + 2 (both redirection AND Host header) in some Applications
+- If the Application is on HTTP and it perfroms redirections we must consider Method 3, which is based on method 2, but it must also rewrite the schema in this case
+- Some Applications may be more complex to configure, such as the one described on Method 4
 - Once chosen a method configure it and test it, analysing the HAR to identify further possible issues
 
 # Example
