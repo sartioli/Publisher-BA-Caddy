@@ -40,7 +40,7 @@ echo "Downloaded example Caddyfile"
 
 # Removing the Caddy container if present
 docker rm -f caddy
-echo "Removed Caddy container if already present. If not the above error is ok"
+echo "Removed Caddy container if already present. If not present, an error is ok"
 docker run --net=host -d --restart unless-stopped --name caddy -v "./Caddyfile:/etc/caddy/Caddyfile" caddy:latest
 echo "Run the Caddy Container"
 
