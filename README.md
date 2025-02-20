@@ -21,6 +21,7 @@ For this reason we recommend:
 - To deploy and configure at least one separate Publisher to serve the internal applications via the Caddy workaround
 - To deploy and configure multiple Publishers with the same Caddy configuration for redundancy and scalability purposes
 - To monitor CPU and RAM consumption after implementing the workaround, and crate new Publisher instances if the CUP/RAM consumption of the Publishers using the workaround increase too much
+
 This workaround is designed to be easily deployed in multiple Publishers, using the exact same configuration in all of them, and associate all those Publishers to the same NPA Browser Application served via the workaround, so, due to the native round-robin Publisher selection in NPA Browser Access, we can share the load among several Publishers with Caddy with a minimal configuration.
 
 # Installation
