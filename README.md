@@ -11,7 +11,8 @@ Caddy can perform many reverse_proxy operations, but it's unable to rewrite the 
 
 # Prerequisites
 - A Netskope Publisher deployed
-- The Netskope Publisher has access to the applications in terms of DNS resolutions and/or IP/Port access
+- Console/SSH access to the Netskope Publisher
+- The Netskope Publisher has access to the internal applications in terms of DNS resolutions and/or IP/Port access
 
 # Installation
 In order to deploy the Caddy container:
