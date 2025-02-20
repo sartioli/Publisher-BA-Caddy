@@ -29,13 +29,16 @@ else
     echo "Entry added successfully."
 fi
 
+HOME_DIR=$(eval echo ~$SUDO_USER)
+cd "$HOME_DIR"
+
 # Removing the CaddyFile if present
-rm -f $home/CaddyFile
-curl -L -o $home/Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
+rm -f ./CaddyFile
+curl -L -o ./Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
 
 # Removing the Caddy container if present
 docker rm -f caddy
-docker run --net=host -d --restart unless-stopped --name caddy -v "$home/Caddyfile:/etc/caddy/Caddyfile" caddy:latest
+docker run --net=host -d --restart unless-stopped --name caddy -v "./Caddyfile:/etc/caddy/Caddyfile" caddy:latest
 
 # Warn the user
 echo "WARNING: The system must be rebooted! This action will reboot your computer."
