@@ -15,7 +15,7 @@ In order to deploy the Caddy container:
 1) Exit the Publisher Wizard (generally key 7)
 2) Run the following commands:
 ```
-curl -L https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/caddy-deployment.sh -o caddy-deployment.sh
+curl -L https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/caddy-deployment.sh -o $(eval echo ~$SUDO_USER)/caddy-deployment.sh
 sudo chmod 777 caddy-deployment.sh
 sudo ./caddy-deployment.sh
 ```
