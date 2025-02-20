@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the hosts file entry
-HOSTS_ENTRY="127.0.0.1 testapp1.lan testapp2.lan testapp3.lan"
+HOSTS_ENTRY="127.0.0.1 testapp1.lan testapp2.lan testapp3.lan testapp4.lan"
 
 # Check if the "caddy" container exists
 if ! docker ps -a --format "{{.Names}}" | grep -q "^caddy$"; then
