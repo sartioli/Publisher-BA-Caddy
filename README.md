@@ -7,7 +7,7 @@ The workaround revolves on the use of Caddy as a reverse proxy to perform some b
 The basic configurations provided should be enough to publish many Web Applications that otherwise can't be publisheed via Browser Access, but some Applications that may require much deeper Rewriting may still not work.
 
 # WARNING
-Caddy can perform many reverse_proxy operations, but it's unable to rewrite the content of HTML transactions. It can only perform rewriting on Headers. Applications that require complex rewriting inside the HTLM code can't be published using this workaround too.
+Caddy can perform many reverse_proxy operations, but it's unable to rewrite the content of the HTML payload. It can only perform rewriting on Headers. Applications that require complex rewriting inside the HTLM code can't be published using this workaround too.
 
 # Prerequisites
 - A Netskope Publisher deployed
