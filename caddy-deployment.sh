@@ -26,7 +26,7 @@ else
     echo "Adding the entry to /etc/hosts..."
     # Append the entry using tee and sudo
     echo "$HOSTS_ENTRY" | sudo tee -a /etc/hosts > /dev/null
-    echo "Entry added successfully."
+    echo "Example hosts entry added successfully."
 fi
 
 HOME_DIR=$(eval echo ~$SUDO_USER)
