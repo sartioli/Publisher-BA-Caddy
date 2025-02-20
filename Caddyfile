@@ -99,6 +99,6 @@
 #        # This ensures that the HTTP Requested Host matches the real Application expected host, or it doesn't answer (or it answers with a 40X error). Every redirect that the Application will issue will respect this Requested Host
 #        header_up Host 192.168.0.1
 #        # This rewrites the Location header on any 30X redirection if the Locaton header is the Application accepted requested host, and sets it as the NPA BA Application Host, so the Client can correctly follow
-#        header_down Location (http://13.42.35.147)(.*) https://ns-36c0892a-443-stefano.eu.npaproxy.goskope.com$2
+#        header_down Location (https://192.168.0.1)(.*) https://ns-36c0892a-443-stefano.eu.npaproxy.goskope.com$2
 #    }
 #}
