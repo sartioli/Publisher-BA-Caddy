@@ -1,8 +1,8 @@
 # Publisher-BA-Caddy
-This repo contains instruction on how to deploy Caddy on a Publisher to manage Browser Applications that require custom URI and Redirections
+This repo contains instruction on how to deploy Caddy on a Publisher to manage NPA Browser Applications that require custom URI and Redirections
 
 # Disclaimer
-This workaround must be considered "as is" and it's not directly supported by Netskope Technical Support.
+This workaround must be considered "as is" and it's not directly supported by Netskope Technical Support. We are planning to have a "Community" type of support, and all the experience collected using this workaround will be used to implement the needed changes to the NPA Browser Access reverse proxy in the backend in future versions.
 The workaround revolves on the use of Caddy as a reverse proxy to perform some basic Headers rewriting, Headers insertions and Redirections to specific URIs.
 The basic configurations provided should be enough to publish many Web Applications that otherwise can't be publisheed via Browser Access, but some Applications that may require much deeper Rewriting may still not work.
 
