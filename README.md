@@ -14,6 +14,15 @@ Caddy can perform many reverse_proxy operations, but it's unable to rewrite the 
 - Console/SSH access to the Netskope Publisher
 - The Netskope Publisher has access to the internal applications in terms of DNS resolutions and/or IP/Port access
 
+# Notes on scalability and redundancy
+While we couldn't perform stress tests on the Publisher with the Caddy workaround enabled, there are plenty of performance tests towards Caddy publicly accessible.
+From the publicly available documentation of Caddy scalability, Caddy should be able to serve tens of thousands of connections simultaneously. The more connections the more CPU and RAM required.
+For this reason we recommend:
+- To deploy and configure at least one separate Publisher to serve the internal applications via the Caddy workaround
+- To deploy and configure multiple Publishers with the same Caddy configuration for redundancy and scalability purposes
+- To monitor CPU and RAM consumption after implementing the workaround, and crate new Publisher instances if the CUP/RAM consumption of the Publishers using the workaround increase too much
+This workaround is designed to be easily deployed in multiple Publishers, using the exact same configuration in all of them, and associate all those Publishers to the same NPA Browser Application served via the workaround, so, due to the native round-robin Publisher selection in NPA Browser Access, we can share the load among several Publishers with Caddy with a minimal configuration.
+
 # Installation
 In order to deploy the Caddy container:
 1) Exit the Publisher Wizard (generally key 7)
