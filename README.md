@@ -10,7 +10,7 @@ The basic configurations provided should be enough to publish many Web Applicati
 Caddy can perform many reverse_proxy operations, but it's unable to rewrite the content of the HTML payload. It can only perform rewriting on Headers. Applications that require complex rewriting inside the HTLM code can't be published using this workaround too.
 
 # Prerequisites
-- A Netskope Publisher deployed
+- A Netskope Publisher deployed and registered
 - Console/SSH access to the Netskope Publisher
 - The Netskope Publisher has access to the internal applications in terms of DNS resolutions and/or IP/Port access
 
