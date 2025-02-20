@@ -4,37 +4,12 @@
 # All the examples below are commented. Create the desired Caddy configurations for the dummy FQDN by copying the methods below and uncomment the sections starting with "testappx.lan" until the last closing bracket "}"
 
 # METHOD 1
-# This application runs on the URI /testapp2/
-# Setting a rewrite for the root to /testapp2/ ensures that all the requests for the root  are rewritten to the /testapp2 URI
-# The NPA Broser Access AP would connect to the root but everything is redorected to the application URI
-# This method doesnt require to specify the NPA Brewser Access URL
-
-# This is the dummy FQDN created in the hosts file
-#testapp2.lan {
-#    tls internal
-#    log {
-#        output file /var/log/caddy/caddy.log
-#    }
-#
-#    # This rewrites all connections to the root domain with the desired application URI
-#    rewrite / /testapp2{path}
-#
-#    # This provides the upstream connection to the real URL of the application. The FQDN and the Port must be the ones of the real application server
-#    reverse_proxy  https://ip-172-31-30-45.eu-west-2.compute.internal:443 {
-#        transport http {
-#            tls
-#            tls_insecure_skip_verify
-#        }
-#    }
-#}
-
-# METHOD 2
 # This application runs on the URI /testapp3/
 # Setting a redirection from the root to the NPA Browser Access URL with the URI /testapp3/ ensures that the Client will be able ot connect to the correct URI
 # The Client follows the redirection correctly
 
 # This is the dummy FQDN created in the hosts file
-#testapp3.lan {
+#testapp1.lan {
 #    tls internal
 #    log {
 #        output file /var/log/caddy/caddy.log
@@ -55,14 +30,14 @@
 #    }
 #}
 
-# METHOD 3
+# METHOD 2
 # This application runs on the URI /application/ and on the root it has a redirect to itself to the URI /application/
 # The application honours the HTTP Request Host, and it issues the redirect to the Requested_Host/application/
 # Setting the Host header equal to the NPA Browser Access URL ensures that any redirection to itself would use the NPA Browser access URL
 # So the Client can follow the redirection correctly
 
 # This is the dummy FQDN created in the hosts file
-#testapp1.lan {
+#testapp2.lan {
 #    tls internal
 #    log {
 #        output file /var/log/caddy/caddy.log
@@ -76,5 +51,54 @@
 #        }
 #        # This ensures that the HTTP Requested Host matches with the NPA Browser Access URL. Every redirect that the Application will issue should respect the Requested Host
 #        header_up Host ns-a0007e13-443-stefano.eu.npaproxy.goskope.com
+#    }
+#}
+
+# METHOD 3
+# This application runs in HTTP, and it relies on 30X redirections.
+# On the reverse_proxy section we don't have to initiate a TLS connection to the application, as it uses HTTP
+# The application honours the HTTP Request Host, and it issues the redirect to whatever the Requested_Host is configured
+# Setting the Host header equal to the NPA Browser Access URL ensures that any redirection to itself would use the NPA Browser access URL
+# But as the 30X redirections are for HTTP schema, we must rewrite it to HTTPS
+# So the Client can follow the redirection correctly
+
+#testapp3.lan {
+#    tls internal
+#    log {
+#        output file /var/log/caddy/caddy.log
+#    }
+#
+#    reverse_proxy  http://ip-172-31-41-68.eu-west-2.compute.internal:80 {
+#        # This ensures that the HTTP Requested Host matches with the NPA Browser Access URL. Every redirect that the Application will issue should respect the Requested Host
+#        header_up Host ns-36c0892a-443-stefano.eu.npaproxy.goskope.com
+#        # We must rewrite the schema on the 30X redirection Location header
+#        header_down Location (http://)(.*) https://$2
+#    }
+#}
+
+# METHOD 4
+# This application runs on the URI /application/ and on the root it has a redirect to itself to the URI /application/, or it can have multiple redirections until it reaches the /application/ URI
+# The application honours the HTTP Request Host, and it issues the redirect Location header to the Requested_Host
+# This Application only accepts as Requested Host its own FQDN and/or IP address !
+# We must set the Requested_Host as the real Application FQDN/IP in order for it to reply
+# We must manage any and all 30X redirections towards itself and rewrite them with the NPA Browser App Host
+
+# This is the dummy FQDN created in the hosts file
+#testapp4.lan {
+#    tls internal
+#    log {
+#        output file /var/log/caddy/caddy.log
+#    }
+#
+#    # This provides the upstream connection to the real URL of the application. The FQDN and the Port must be the ones of the real application server
+#    reverse_proxy https://192.168.0.1:443 {
+#        transport http {
+#            tls
+#            tls_insecure_skip_verify
+#        }
+#        # This ensures that the HTTP Requested Host matches the real Application expected host, or it doesn't answer (or it answers with a 40X error). Every redirect that the Application will issue will respect this Requested Host
+#        header_up Host 192.168.0.1
+#        # This rewrites the Location header on any 30X redirection if the Locaton header is the Application accepted requested host, and sets it as the NPA BA Application Host, so the Client can correctly follow
+#        header_down Location (http://13.42.35.147)(.*) https://ns-36c0892a-443-stefano.eu.npaproxy.goskope.com$2
 #    }
 #}
