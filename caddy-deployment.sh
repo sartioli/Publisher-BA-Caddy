@@ -34,11 +34,15 @@ cd "$HOME_DIR"
 
 # Removing the CaddyFile if present
 rm -f ./Caddyfile
+echo "Removed Cddyfile if present"
 curl -L -o ./Caddyfile "https://github.com/sartioli/Publisher-BA-Caddy/raw/refs/heads/main/Caddyfile"
+echo "Downloaded example Caddyfile"
 
 # Removing the Caddy container if present
 docker rm -f caddy
+echo "Removed Caddy container if already present. If not the above error is ok"
 docker run --net=host -d --restart unless-stopped --name caddy -v "./Caddyfile:/etc/caddy/Caddyfile" caddy:latest
+echo "Run the Caddy Container"
 
 # Warn the user
 echo "WARNING: The system must be rebooted! This action will reboot your computer."
